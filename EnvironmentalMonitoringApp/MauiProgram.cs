@@ -34,8 +34,14 @@ public static class MauiProgram
         builder.Services.AddDbContext<EnvMonitorDbContext>(options => options.UseSqlServer(connectionString));
 
         builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<AdminDashboardViewModel>();
+        builder.Services.AddTransient<ScientistDashboardViewModel>();
+        builder.Services.AddTransient<OperationsDashboardViewModel>();
 
         builder.Services.AddTransient<LoginPage>();
+		builder.Services.AddTransient<AdminDashboard>();
+		builder.Services.AddTransient<ScientistDashboard>();
+		builder.Services.AddTransient<OperationsDashboard>();
 
 #if DEBUG
         builder.Logging.AddDebug();

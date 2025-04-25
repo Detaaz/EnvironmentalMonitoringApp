@@ -70,7 +70,9 @@ public partial class LoginViewModel : ObservableObject
                 if (login.password == Password)
                 {
                     await Shell.Current.DisplayAlert("Success", "Logged in!", "OK");
-                    loginSuccess();
+                    // passes the id of the account thats logged in to direct the user to the correct dashboard
+                    int logged_Id = login.login_id;
+                    loginSuccess(logged_Id);
                 }
                 else
                 {
@@ -90,13 +92,13 @@ public partial class LoginViewModel : ObservableObject
         }
     }
 
-    async void loginSuccess()
+    async void loginSuccess(int logged_Id)
     {
         try
         {
             var user = await _context.Users
                 .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.login_id == login_id);
+                .FirstOrDefaultAsync(u => u.login_id == logged_Id);
 
             if (user == null)
             {
@@ -104,15 +106,15 @@ public partial class LoginViewModel : ObservableObject
             }
             if (user.role == "Administrator")
             {
-                // await Shell.Current.GoToAsync("//AdminDashboard")
+                await Shell.Current.GoToAsync(nameof(Views.AdminDashboard));
             }
             else if (user.role == "Operations Manager")
             {
-                // await Shell.Current.GoToAsync("//OperationsDashboard")
+                await Shell.Current.GoToAsync(nameof(Views.OperationsDashboard));
             }
             else if (user.role == "Environmental Scientist")
             {
-                // await Shell.Current.GoToAsync("//ScientistDashboard")
+                await Shell.Current.GoToAsync(nameof(Views.ScientistDashboard));
             }
 
         }
