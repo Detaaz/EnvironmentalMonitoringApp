@@ -37,11 +37,13 @@ public static class MauiProgram
         builder.Services.AddTransient<AdminDashboardViewModel>();
         builder.Services.AddTransient<ScientistDashboardViewModel>();
         builder.Services.AddTransient<OperationsDashboardViewModel>();
+        builder.Services.AddTransient<UserViewModel>();
 
         builder.Services.AddTransient<LoginPage>();
 		builder.Services.AddTransient<AdminDashboard>();
 		builder.Services.AddTransient<ScientistDashboard>();
 		builder.Services.AddTransient<OperationsDashboard>();
+		builder.Services.AddTransient<AdminEditUserPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:EnvironmentalMonitoringApp.ViewModels"
+             x:Class="EnvironmentalMonitoringApp.Views.AdminEditUserPage"
+             Title="Admin Edit User Page">
+    
+    <VerticalStackLayout Spacing="10"
+                        Margin="5">
+        <Picker x:Name="rolePicker"
+        Title="Select a Role">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Administrator</x:String>
+                    <x:String>Operations Manager</x:String>
+                    <x:String>Environmental Scientist</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+
+        <Grid ColumnDefinitions="*,*"
+                                ColumnSpacing="4">
+            <Button Text="Save"
+                                Command="{Binding SaveCommand}"/>
+
+            <Button Grid.Column="1"
+                                Text="Delete"
+                                Command="{Binding DeleteCommand}"/>
+
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
