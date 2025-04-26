@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:EnvironmentalMonitoringApp.ViewModels"
+             x:Class="EnvironmentalMonitoringApp.Views.AdminEditUserPage"
+             Title="Admin Edit User Page">
+    
+    <VerticalStackLayout Spacing="10"
+                        Margin="5">
+        <Label Text="{Binding FullName}" FontSize="22"/>
+        <Label Text="{Binding Role}" FontSize="16"/>
+
+        <Picker x:Name="rolePicker"
+                Title="Select new Role" 
+                ItemsSource="{Binding Roles}"
+                SelectedItem="{Binding SelectedRole}">
+        </Picker>
+        
+        
+        <Button Text="Save"
+                    Command="{Binding SaveCommand}"/>
+
+    </VerticalStackLayout>
+</ContentPage>
