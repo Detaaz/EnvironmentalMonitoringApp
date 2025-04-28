@@ -14,6 +14,7 @@ namespace EnvironmentalMonitoringApp.ViewModels;
 public partial class UserViewModel : ObservableObject, IQueryAttributable
 {
     private Models.Users _users;
+    private EnvMonitorDbContext _context;
 
     public int User_id => _users.user_id;
     public string First_name
@@ -71,7 +72,7 @@ public partial class UserViewModel : ObservableObject, IQueryAttributable
     // Combine names for presentation
     public string FullName => _users.first_name + " " + _users.last_name;
 
-    private EnvMonitorDbContext _context;
+    
 
     public ObservableCollection<string> Roles { get; } = new ObservableCollection<string>
     {
