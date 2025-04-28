@@ -11,4 +11,7 @@ public class EnvMonitorDbContext : DbContext
     }
     public DbSet<Login> Logins { get; set; }
     public DbSet<Users> Users { get; set; }
+    public DbSet<Sensor> Sensors { get; set; }
+    public DbSet<Measurement> Measurements { get; set; }
+    public DbSet<PhysicalQuantity> PhysicalQuantities { get; set; }
 }

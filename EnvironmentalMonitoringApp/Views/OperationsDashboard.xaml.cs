@@ -1,9 +1,12 @@
+using EnvironmentalMonitoringApp.ViewModels;
+
 namespace EnvironmentalMonitoringApp.Views;
 
 public partial class OperationsDashboard : ContentPage
 {
-	public OperationsDashboard()
+	public OperationsDashboard(OperationsDashboardViewModel viewModel)
 	{
-		InitializeComponent();
-	}
+        this.BindingContext = viewModel;
+        InitializeComponent();
+    }
 }
