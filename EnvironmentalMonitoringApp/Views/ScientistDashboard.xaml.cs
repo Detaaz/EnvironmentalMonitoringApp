@@ -8,5 +8,7 @@ public partial class ScientistDashboard : ContentPage
 	{
         this.BindingContext = viewModel;
         InitializeComponent();
-	}
+
+        Routing.RegisterRoute(nameof(SensorConfigEditPage), typeof(SensorConfigEditPage));
+    }
 }

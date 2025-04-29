@@ -11,13 +11,25 @@ using System.Data;
 
 namespace EnvironmentalMonitoringApp.ViewModels;
 
-public partial class SensorConfigViewModel : ObservableObject
+public partial class SensorConfigViewModel : ObservableObject, IQueryAttributable
 {
     private Models.Sensor _sensor;
     private Models.Measurement _Measurement;
     private Models.PhysicalQuantity _physicalQuantity;
     private EnvMonitorDbContext _context;
 
+    public int SensorID
+    {
+        get => _sensor.sensor_id;
+        set
+        {
+            if (_sensor.sensor_id != value)
+            {
+                _sensor.sensor_id = value;
+                OnPropertyChanged();
+            }
+        }
+    }
     public string SensorType
     {
         get => _sensor.sensor_type;
@@ -44,10 +56,33 @@ public partial class SensorConfigViewModel : ObservableObject
         }
     }
 
+    public SensorConfigViewModel(EnvMonitorDbContext envMonitorDbContext)
+    {
+        _context = envMonitorDbContext;
+        _sensor = new Sensor();
+    }
+
     public SensorConfigViewModel(EnvMonitorDbContext envMonitorDbContext, Sensor sensor)
     {
         _context = envMonitorDbContext;
         _sensor = sensor;
+    }
+
+    [RelayCommand]
+    private async Task Save()
+    {
+        
+        _context.SaveChanges();
+        await Shell.Current.GoToAsync(nameof(Views.ScientistDashboard));
+    }
+
+    void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.ContainsKey("load"))
+        {
+            _sensor = _context.Sensors.Single(s => s.sensor_id== int.Parse(query["load"].ToString()));
+            RefreshProperties();
+        }
     }
 
     public void Reload()
