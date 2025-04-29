@@ -1,9 +1,12 @@
+using EnvironmentalMonitoringApp.ViewModels;
+
 namespace EnvironmentalMonitoringApp.Views;
 
 public partial class ScientistDashboard : ContentPage
 {
-	public ScientistDashboard()
+	public ScientistDashboard(ScientistDashboardViewModel viewModel)
 	{
-		InitializeComponent();
+        this.BindingContext = viewModel;
+        InitializeComponent();
 	}
 }
