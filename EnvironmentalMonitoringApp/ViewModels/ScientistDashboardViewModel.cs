@@ -14,7 +14,7 @@ namespace EnvironmentalMonitoringApp.ViewModels;
 
 public partial class ScientistDashboardViewModel : ObservableObject
 {
-    public ObservableCollection<SensorConfigViewModel> AllSensors { get; }
+    public ObservableCollection<SensorConfigViewModel> AllSensors { get; set; }
 
     public ICommand SelectSensorCommand { get; }
 
@@ -24,36 +24,26 @@ public partial class ScientistDashboardViewModel : ObservableObject
     {
         _context = envMonitorDbContext;
 
-        // Gets quantity ids
-        // Has to be a better way of doing this but it works
-        AllSensors = new ObservableCollection<SensorConfigViewModel>(
-            _context.Sensors.Select(sensor => new
-            {
-                Sensor = sensor,
-                PhysicalQuantity = _context.PhysicalQuantities
-                .Where(pq => pq.sensor_id == sensor.sensor_id)
-                .Select(pq => new { pq.quantity_name, pq.lower_warning_threshold, pq.lower_emergency_threshold, pq.upper_warning_threshold, pq.upper_emergency_threshold })
-                .FirstOrDefault()
-            }).ToList()
-            .Select(pq => new SensorConfigViewModel(_context, pq.Sensor)
-            {
-                SensorName = pq.PhysicalQuantity.quantity_name,
-                LowerWarning = pq.PhysicalQuantity.lower_warning_threshold,
-                UpperWarning = pq.PhysicalQuantity.upper_warning_threshold,
-                LowerEmergency = pq.PhysicalQuantity.lower_emergency_threshold,
-                UpperEmergency = pq.PhysicalQuantity.upper_emergency_threshold
-
-            }));
+        LoadSensors();
 
         SelectSensorCommand = new AsyncRelayCommand<SensorConfigViewModel>(SelectSensorAsync);
     }
 
-    private async Task SelectSensorAsync(ViewModels.SensorConfigViewModel sensor)
+    private void LoadSensors() 
+    {
+        // Gets quantity ids
+        AllSensors = new ObservableCollection<SensorConfigViewModel>(
+            _context.PhysicalQuantities.ToList().Select(pq => new SensorConfigViewModel(_context, pq))
+            );
+    }
+
+
+    private async Task SelectSensorAsync(ViewModels.SensorConfigViewModel physicalQuantity)
     {
         try
         {
-            if (sensor != null)
-                await Shell.Current.GoToAsync($"{nameof(Views.SensorConfigEditPage)}?load={sensor.SensorID}");
+            if (physicalQuantity != null)
+                await Shell.Current.GoToAsync($"{nameof(Views.SensorConfigEditPage)}?load={physicalQuantity.SensorID}");
         }
         catch (Exception ex)
         {

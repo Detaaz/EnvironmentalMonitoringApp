@@ -7,73 +7,108 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Collections.ObjectModel;
-using System.Data;
 
 namespace EnvironmentalMonitoringApp.ViewModels;
 
 public partial class SensorConfigViewModel : ObservableObject, IQueryAttributable
 {
     private Models.Sensor _sensor;
-    private Models.Measurement _Measurement;
     private Models.PhysicalQuantity _physicalQuantity;
     private EnvMonitorDbContext _context;
     internal object PhysicalQuantities;
 
     public int SensorID
     {
-        get => _sensor.sensor_id;
+        get => _physicalQuantity.sensor_id;
         set
         {
-            if (_sensor.sensor_id != value)
+            if (_physicalQuantity.sensor_id != value)
             {
-                _sensor.sensor_id = value;
+                _physicalQuantity.sensor_id = value;
                 OnPropertyChanged();
             }
         }
     }
-    public string SensorType
+    public string SensorName
     {
-        get => _sensor.sensor_type;
+        get => _physicalQuantity.quantity_name;
         set
         {
-            if (_sensor.sensor_type != value)
+            if (_physicalQuantity.quantity_name != value)
             {
-                _sensor.sensor_type = value;
+                _physicalQuantity.quantity_name = value;
                 OnPropertyChanged();
 
             }
         }
     }
-    public string Status
+
+    public double LowerWarning
     {
-        get => _sensor.status;
+        get => _physicalQuantity.lower_warning_threshold;
         set
         {
-            if (_sensor.status != value)
+            if (_physicalQuantity.lower_warning_threshold != value)
             {
-                _sensor.status = value;
+                _physicalQuantity.lower_warning_threshold = value;
                 OnPropertyChanged();
+
             }
         }
     }
+    
+    public double UpperWarning
+    {
+        get => _physicalQuantity.upper_warning_threshold;
+        set
+        {
+            if (_physicalQuantity.upper_warning_threshold != value)
+            {
+                _physicalQuantity.upper_warning_threshold = value;
+                OnPropertyChanged();
 
-    public string SensorName { get; set; }
-    public double LowerWarning { get; set; }
-    public double UpperWarning { get; set; }
-    public double LowerEmergency { get; set; }
-    public double UpperEmergency { get; set; }
+            }
+        }
+    }
+        
+    public double LowerEmergency
+    {
+        get => _physicalQuantity.lower_emergency_threshold;
+        set
+        {
+            if (_physicalQuantity.lower_emergency_threshold != value)
+            {
+                _physicalQuantity.lower_emergency_threshold = value;
+                OnPropertyChanged();
 
+            }
+        }
+    }        
+
+    public double UpperEmergency
+    {
+        get => _physicalQuantity.upper_emergency_threshold;
+        set
+        {
+            if (_physicalQuantity.upper_emergency_threshold != value)
+            {
+                _physicalQuantity.upper_emergency_threshold = value;
+                OnPropertyChanged();
+
+            }
+        }
+    }
 
     public SensorConfigViewModel(EnvMonitorDbContext envMonitorDbContext)
     {
         _context = envMonitorDbContext;
-        _sensor = new Sensor();
+        _physicalQuantity = new PhysicalQuantity();
     }
 
-    public SensorConfigViewModel(EnvMonitorDbContext envMonitorDbContext, Sensor sensor)
+    public SensorConfigViewModel(EnvMonitorDbContext envMonitorDbContext, PhysicalQuantity phyiscalQuantity)
     {
         _context = envMonitorDbContext;
-        _sensor = sensor;
+        _physicalQuantity = phyiscalQuantity;
     }
 
     [RelayCommand]
@@ -88,7 +123,7 @@ public partial class SensorConfigViewModel : ObservableObject, IQueryAttributabl
     {
         if (query.ContainsKey("load"))
         {
-            _sensor = _context.Sensors.Single(s => s.sensor_id== int.Parse(query["load"].ToString()));
+            _physicalQuantity = _context.PhysicalQuantities.Single(pq => pq.quantity_id == int.Parse(query["load"].ToString()));
             RefreshProperties();
         }
     }
@@ -101,8 +136,10 @@ public partial class SensorConfigViewModel : ObservableObject, IQueryAttributabl
 
     private void RefreshProperties()
     {
-        OnPropertyChanged(nameof(SensorType));
-        OnPropertyChanged(nameof(Status));
         OnPropertyChanged(nameof(SensorName));
+        OnPropertyChanged(nameof(LowerWarning));
+        OnPropertyChanged(nameof(UpperWarning));
+        OnPropertyChanged(nameof(LowerEmergency));
+        OnPropertyChanged(nameof(UpperEmergency));
     }
 }
