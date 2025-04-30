@@ -8,12 +8,40 @@
     <VerticalStackLayout Spacing="10"
                         Margin="5">
         <Label Text="{Binding SensorName}" FontSize="22"/>
-        <Label Text="{Binding LowerWarning}" FontSize="14" TextColor="Silver"/>
-        <Label Text="{Binding UpperWarning}" FontSize="14" TextColor="Silver"/>
-        <Label Text="{Binding LowerEmergency}" FontSize="14" TextColor="Silver"/>
-        <Label Text="{Binding UpperEmergency}" FontSize="14" TextColor="Silver"/>
+        
+
+
+        <Entry
+            x:Name="LowerWarning"
+            Placeholder="{Binding LowerWarning}"
+            Keyboard="Numeric"
+            Text="{Binding LowerWarning}"
+            />
+        
+        <Entry
+            x:Name="UpperWarning"
+            Placeholder="{Binding UpperWarning}"
+            Keyboard="Numeric"
+            Text="{Binding UpperWarning}"
+            />
+        
+        <Entry
+            x:Name="LowerEmergency"
+            Placeholder="{Binding LowerEmergency}"
+            Keyboard="Numeric"
+            Text="{Binding LowerEmergency}"
+            />
+        
+        <Entry
+            x:Name="UpperEmergency"
+            Placeholder="{Binding UpperEmergency}"
+            Keyboard="Numeric"
+            Text="{Binding UpperEmergency}"
+            />
+
         
         
+
         <Button Text="Save"
                     Command="{Binding SaveCommand}"/>
 

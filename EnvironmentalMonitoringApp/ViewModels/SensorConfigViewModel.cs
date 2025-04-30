@@ -7,6 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace EnvironmentalMonitoringApp.ViewModels;
 
@@ -114,9 +115,20 @@ public partial class SensorConfigViewModel : ObservableObject, IQueryAttributabl
     [RelayCommand]
     private async Task Save()
     {
-        // needs to be added to the figures that are being updated
-        _context.SaveChanges();
-        await Shell.Current.GoToAsync(nameof(Views.ScientistDashboard));
+        if (LowerWarning < UpperWarning && LowerEmergency < UpperEmergency)
+        {
+            _physicalQuantity.lower_warning_threshold = LowerWarning;
+            _physicalQuantity.upper_warning_threshold = UpperWarning;
+            _physicalQuantity.lower_emergency_threshold = LowerEmergency;
+            _physicalQuantity.upper_emergency_threshold = UpperEmergency;
+
+            _context.SaveChanges();
+            await Shell.Current.GoToAsync(nameof(Views.ScientistDashboard));
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert("Error", "Please ensure thw low end value is LESS THAN the upper value", "OK");
+        }
     }
 
     void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
