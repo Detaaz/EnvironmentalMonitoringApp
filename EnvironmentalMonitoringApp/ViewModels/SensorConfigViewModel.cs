@@ -17,6 +17,7 @@ public partial class SensorConfigViewModel : ObservableObject, IQueryAttributabl
     private Models.Measurement _Measurement;
     private Models.PhysicalQuantity _physicalQuantity;
     private EnvMonitorDbContext _context;
+    internal object PhysicalQuantities;
 
     public int SensorID
     {
@@ -56,6 +57,13 @@ public partial class SensorConfigViewModel : ObservableObject, IQueryAttributabl
         }
     }
 
+    public string SensorName { get; set; }
+    public double LowerWarning { get; set; }
+    public double UpperWarning { get; set; }
+    public double LowerEmergency { get; set; }
+    public double UpperEmergency { get; set; }
+
+
     public SensorConfigViewModel(EnvMonitorDbContext envMonitorDbContext)
     {
         _context = envMonitorDbContext;
@@ -71,7 +79,7 @@ public partial class SensorConfigViewModel : ObservableObject, IQueryAttributabl
     [RelayCommand]
     private async Task Save()
     {
-        
+        // needs to be added to the figures that are being updated
         _context.SaveChanges();
         await Shell.Current.GoToAsync(nameof(Views.ScientistDashboard));
     }
@@ -95,5 +103,6 @@ public partial class SensorConfigViewModel : ObservableObject, IQueryAttributabl
     {
         OnPropertyChanged(nameof(SensorType));
         OnPropertyChanged(nameof(Status));
+        OnPropertyChanged(nameof(SensorName));
     }
 }

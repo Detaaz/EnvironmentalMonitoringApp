@@ -7,6 +7,8 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Linq;
+
 
 namespace EnvironmentalMonitoringApp.ViewModels;
 
@@ -21,9 +23,28 @@ public partial class ScientistDashboardViewModel : ObservableObject
     public ScientistDashboardViewModel(EnvMonitorDbContext envMonitorDbContext)
     {
         _context = envMonitorDbContext;
+
+        // Gets quantity ids
+        // Has to be a better way of doing this but it works
         AllSensors = new ObservableCollection<SensorConfigViewModel>(
-            _context.Sensors.ToList().Select(sc => new SensorConfigViewModel(_context, sc))
-        );
+            _context.Sensors.Select(sensor => new
+            {
+                Sensor = sensor,
+                PhysicalQuantity = _context.PhysicalQuantities
+                .Where(pq => pq.sensor_id == sensor.sensor_id)
+                .Select(pq => new { pq.quantity_name, pq.lower_warning_threshold, pq.lower_emergency_threshold, pq.upper_warning_threshold, pq.upper_emergency_threshold })
+                .FirstOrDefault()
+            }).ToList()
+            .Select(pq => new SensorConfigViewModel(_context, pq.Sensor)
+            {
+                SensorName = pq.PhysicalQuantity.quantity_name,
+                LowerWarning = pq.PhysicalQuantity.lower_warning_threshold,
+                UpperWarning = pq.PhysicalQuantity.upper_warning_threshold,
+                LowerEmergency = pq.PhysicalQuantity.lower_emergency_threshold,
+                UpperEmergency = pq.PhysicalQuantity.upper_emergency_threshold
+
+            }));
+
         SelectSensorCommand = new AsyncRelayCommand<SensorConfigViewModel>(SelectSensorAsync);
     }
 

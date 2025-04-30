@@ -19,8 +19,11 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <StackLayout>
-                    <Label Text="{Binding SensorType, StringFormat='Sensor Type: {0}'}" FontSize="22"/>
-                    <Label Text="{Binding Status}" FontSize="14" TextColor="Silver"/>
+                    <Label Text="{Binding SensorName}" FontSize="22"/>
+                    <Label Text="{Binding LowerWarning}" FontSize="14" TextColor="Silver"/>
+                    <Label Text="{Binding UpperWarning}" FontSize="14" TextColor="Silver"/>
+                    <Label Text="{Binding LowerEmergency}" FontSize="14" TextColor="Silver"/>
+                    <Label Text="{Binding UpperEmergency}" FontSize="14" TextColor="Silver"/>
                 </StackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>
