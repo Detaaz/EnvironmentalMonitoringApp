@@ -56,3 +56,7 @@ $RECYCLE.BIN/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Tests
+EnvMonitorApp.Test/obj
+EnvMonitorApp.Test/bin

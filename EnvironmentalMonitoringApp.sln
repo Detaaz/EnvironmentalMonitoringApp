@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvironmentalMonitoringApp", "EnvironmentalMonitoringApp\EnvironmentalMonitoringApp.csproj", "{AF6D50AF-ECEF-4D1D-81FF-FAD800587C77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvMonitorApp.Test", "EnvMonitorApp.Test\EnvMonitorApp.Test.csproj", "{FEBC4377-42F5-4045-9E51-CD659CD2BE22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{AF6D50AF-ECEF-4D1D-81FF-FAD800587C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF6D50AF-ECEF-4D1D-81FF-FAD800587C77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF6D50AF-ECEF-4D1D-81FF-FAD800587C77}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FEBC4377-42F5-4045-9E51-CD659CD2BE22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBC4377-42F5-4045-9E51-CD659CD2BE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBC4377-42F5-4045-9E51-CD659CD2BE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBC4377-42F5-4045-9E51-CD659CD2BE22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

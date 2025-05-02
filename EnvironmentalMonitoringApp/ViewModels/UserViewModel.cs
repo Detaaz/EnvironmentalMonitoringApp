@@ -24,7 +24,7 @@ public partial class UserViewModel : ObservableObject, IQueryAttributable
         {
             if (_users.first_name != value)
             {
-                _users.first_name = value;
+                _users.first_name = value;  
                 OnPropertyChanged();
             }
         }
@@ -93,20 +93,30 @@ public partial class UserViewModel : ObservableObject, IQueryAttributable
     }
 
     [RelayCommand]
-    private async Task Save()
+    public async Task Save()
+    {
+        SaveChange();
+        await Shell.Current.GoToAsync(nameof(Views.AdminDashboard));
+    }
+
+    public void SaveChange()
     {
         _users.role = SelectedRole;
         _context.SaveChanges();
-        await Shell.Current.GoToAsync(nameof(Views.AdminDashboard));
     }
 
     void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.ContainsKey("load"))
         {
-            _users = _context.Users.Single(u => u.user_id == int.Parse(query["load"].ToString()));
-            RefreshProperties();
+            LoadUser(query);
         }
+    }
+
+    public void LoadUser(IDictionary<string, object> query)
+    {
+        _users = _context.Users.Single(u => u.user_id == int.Parse(query["load"].ToString()));
+        RefreshProperties();
     }
 
     public void Reload()

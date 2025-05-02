@@ -4,8 +4,7 @@ using EnvironmentalMonitoringApp.Models;
 namespace EnvironmentalMonitoringApp.Data;
 public class EnvMonitorDbContext : DbContext
 {
-    public EnvMonitorDbContext()
-    { }
+    
     public EnvMonitorDbContext(DbContextOptions<EnvMonitorDbContext> options) : base(options)
     {
     }
