@@ -1,12 +1,15 @@
 using EnvironmentalMonitoringApp.ViewModels;
 
+
 namespace EnvironmentalMonitoringApp.Views;
 
-public partial class OperationsDashboard : ContentPage
+public partial class SensorConfigEditPage : ContentPage
 {
-	public OperationsDashboard(OperationsDashboardViewModel viewModel)
+	public SensorConfigEditPage(SensorConfigViewModel viewModel)
 	{
         this.BindingContext = viewModel;
         InitializeComponent();
-    }
+
+
+	}
 }

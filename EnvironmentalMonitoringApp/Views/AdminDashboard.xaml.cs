@@ -8,5 +8,7 @@ public partial class AdminDashboard : ContentPage
     {
         this.BindingContext = viewModel;
         InitializeComponent();
+
+        Routing.RegisterRoute(nameof(AdminEditUserPage), typeof(AdminEditUserPage));
     }
 }

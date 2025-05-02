@@ -13,7 +13,7 @@ namespace EnvironmentalMonitoringApp.ViewModels;
 public partial class LoginViewModel : ObservableObject
 {
     private Models.Login _login;
-    private Models.Users _user;
+    private readonly Models.Users _user;
 
     public int login_id => _login.login_id;
     public string Username

@@ -2,11 +2,11 @@ using EnvironmentalMonitoringApp.ViewModels;
 
 namespace EnvironmentalMonitoringApp.Views;
 
-public partial class OperationsDashboard : ContentPage
+public partial class AdminEditUserPage : ContentPage
 {
-	public OperationsDashboard(OperationsDashboardViewModel viewModel)
+	public AdminEditUserPage(UserViewModel viewModel)
 	{
         this.BindingContext = viewModel;
         InitializeComponent();
-    }
+	}
 }
