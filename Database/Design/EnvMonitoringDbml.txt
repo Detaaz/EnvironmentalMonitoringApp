@@ -1,0 +1,97 @@
+Table measurement {
+  timestamp timestamp
+  quantity_id integer
+  value varchar
+  measurement_unit varchar
+  measurement_id integer [primary key]
+}
+
+
+Table incident_measurement {
+  measurement_id integer [primary key]
+  incident_id integer [primary key]
+}
+
+Table incident {
+  priority integer
+  responder_id integer 
+  incident_id integer [primary key]
+  responder_comments varchar
+  resolved_date datetime
+}
+
+Table users {
+  first_name varchar
+  last_name varchar
+  email varchar
+  role varchar
+  user_id integer [primary key]
+  login_id integer
+}
+
+Table login {
+  login_id integer [primary key]
+  username varchar [not null]
+  password varchar [not null]
+}
+
+Table physical_quantity {
+  quantity_name varchar
+  quantity_id integer [primary key]
+  sensor_id integer 
+  lower_warning_threshold double
+  upper_warning_threshold double
+  lower_emergency_threshold double
+  upper_emergency_threshold double
+}
+
+
+Table sensor {
+  sensor_type varchar
+  sensor_id integer [primary key]
+  status varchar
+  deployment_date datetime
+  latitude double
+  longitude double
+  height double
+  orientation integer
+  measurement_frequency varchar
+}
+
+
+
+Table maintenance {
+  maintenance_id integer [primary key]
+  maintenance_date datetime
+  maintainer_id integer 
+  maintainer_comments varchar
+  sensor_id integer 
+}
+
+Table configuration {
+  setting_name varchar
+  minimum_value double
+  maximum_value double
+  current_value double
+  setting_id integer [primary key]
+  sensor_id integer
+
+}
+
+Ref generates: measurement.measurement_id - incident_measurement.measurement_id
+
+Ref includes: incident.incident_id < incident_measurement.incident_id
+
+Ref measures: physical_quantity.sensor_id > sensor.sensor_id
+
+Ref deals_with: incident.responder_id > users.user_id
+
+Ref logs_in: users.login_id - login.login_id
+
+Ref represented_by: measurement.quantity_id > physical_quantity.quantity_id
+
+Ref defined_by: "sensor"."sensor_id" < "configuration"."sensor_id"
+
+Ref inspected_by: "sensor"."sensor_id" < "maintenance"."sensor_id"
+
+Ref records: "users"."user_id" < "maintenance"."maintainer_id"
